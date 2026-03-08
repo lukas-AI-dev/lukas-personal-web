@@ -1,6 +1,7 @@
 "use server";
 
 import { Resend } from "resend";
+import { env } from "@/lib/env";
 
 interface SendEmailResult {
   success: boolean;
@@ -11,30 +12,24 @@ interface SendEmailResult {
  * Server Action that sends a contact form email via the Resend API.
  */
 export async function sendEmail(formData: FormData): Promise<SendEmailResult> {
-  const name = (formData.get("name") as string)?.trim();
-  const email = (formData.get("email") as string)?.trim();
-  const message = (formData.get("message") as string)?.trim();
+  const nameValue = formData.get("name");
+  const emailValue = formData.get("email");
+  const messageValue = formData.get("message");
+
+  const name = typeof nameValue === "string" ? nameValue.trim() : "";
+  const email = typeof emailValue === "string" ? emailValue.trim() : "";
+  const message = typeof messageValue === "string" ? messageValue.trim() : "";
 
   // Basic validation
   if (!name || !email || !message) {
-    return { success: false, error: "All fields are required." };
+    return { success: false, error: "Vyplňte prosím všechna pole." };
   }
-
-  const apiKey = process.env.RESEND_API_KEY;
-  const senderEmail = process.env.SENDER_EMAIL;
-  const personalEmail = process.env.PERSONAL_EMAIL;
-
-  if (!apiKey || !senderEmail || !personalEmail) {
-    console.error("Missing required environment variables for email sending.");
-    return { success: false, error: "Server configuration error." };
-  }
-
-  const resend = new Resend(apiKey);
 
   try {
+    const resend = new Resend(env.RESEND_API_KEY);
     const { error } = await resend.emails.send({
-      from: senderEmail,
-      to: personalEmail,
+      from: env.SENDER_EMAIL,
+      to: env.PERSONAL_EMAIL,
       replyTo: email,
       subject: `Nová zpráva od ${name}`,
       html: `
@@ -51,12 +46,12 @@ export async function sendEmail(formData: FormData): Promise<SendEmailResult> {
 
     if (error) {
       console.error("Resend API error:", error);
-      return { success: false, error: "Failed to send email." };
+      return { success: false, error: "Odeslání selhalo kvůli chybě serveru." };
     }
 
     return { success: true };
   } catch (err) {
     console.error("Unexpected error sending email:", err);
-    return { success: false, error: "An unexpected error occurred." };
+    return { success: false, error: "Došlo k nečekané chybě. Zkuste to prosím znovu." };
   }
 }

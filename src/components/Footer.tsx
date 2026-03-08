@@ -17,7 +17,7 @@ export default function Footer() {
 
           {/* Copyright */}
           <p className="flex items-center gap-1.5 text-sm text-[#94a3b8]">
-            © 2026 — Vytvořeno s
+            © {new Date().getFullYear()} — Vytvořeno s
             <Heart className="w-3.5 h-3.5 text-[#ec4899] fill-[#ec4899]" />
             a vibe codingem
           </p>

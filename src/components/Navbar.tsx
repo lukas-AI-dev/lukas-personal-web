@@ -25,10 +25,14 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleLinkClick = (href: string) => {
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
     setIsMobileMenuOpen(false);
     const element = document.querySelector(href);
-    element?.scrollIntoView({ behavior: "smooth" });
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+      window.history.pushState(null, "", href);
+    }
   };
 
   return (
@@ -44,30 +48,33 @@ export default function Navbar() {
     >
       <div className="mx-auto max-w-6xl px-6 flex items-center justify-between">
         {/* Logo / Name */}
-        <button
-          onClick={() => handleLinkClick("#hero")}
-          className="text-xl font-bold bg-gradient-to-r from-[#6366f1] to-[#a855f7] bg-clip-text text-transparent hover:opacity-80 transition-opacity cursor-pointer"
+        <a
+          href="#hero"
+          onClick={(e) => handleLinkClick(e, "#hero")}
+          className="text-xl font-bold bg-gradient-to-r from-[#6366f1] to-[#a855f7] bg-clip-text text-transparent hover:opacity-80 transition-opacity cursor-pointer inline-block"
         >
           Lukáš Kachtík
-        </button>
+        </a>
 
         {/* Desktop nav links */}
         <div className="hidden md:flex items-center gap-8">
           {NAV_LINKS.map((link) => (
-            <button
+            <a
               key={link.href}
-              onClick={() => handleLinkClick(link.href)}
+              href={link.href}
+              onClick={(e) => handleLinkClick(e, link.href)}
               className="text-sm font-medium text-[#64748b] hover:text-[#6366f1] transition-colors cursor-pointer"
             >
               {link.label}
-            </button>
+            </a>
           ))}
-          <button
-            onClick={() => handleLinkClick("#contact")}
-            className="btn-gradient text-sm font-semibold px-5 py-2.5 rounded-full cursor-pointer"
+          <a
+            href="#contact"
+            onClick={(e) => handleLinkClick(e, "#contact")}
+            className="btn-gradient text-sm font-semibold px-5 py-2.5 rounded-full cursor-pointer inline-block"
           >
             Napište mi
-          </button>
+          </a>
         </div>
 
         {/* Mobile menu button */}
@@ -96,20 +103,22 @@ export default function Navbar() {
           >
             <div className="p-4 flex flex-col gap-3">
               {NAV_LINKS.map((link) => (
-                <button
+                <a
                   key={link.href}
-                  onClick={() => handleLinkClick(link.href)}
-                  className="text-left text-sm font-medium text-[#64748b] hover:text-[#6366f1] py-2 px-3 rounded-xl hover:bg-[rgba(99,102,241,0.05)] transition-all cursor-pointer"
+                  href={link.href}
+                  onClick={(e) => handleLinkClick(e, link.href)}
+                  className="block text-left text-sm font-medium text-[#64748b] hover:text-[#6366f1] py-2 px-3 rounded-xl hover:bg-[rgba(99,102,241,0.05)] transition-all cursor-pointer"
                 >
                   {link.label}
-                </button>
+                </a>
               ))}
-              <button
-                onClick={() => handleLinkClick("#contact")}
-                className="btn-gradient text-sm font-semibold px-5 py-2.5 rounded-full mt-1 cursor-pointer"
+              <a
+                href="#contact"
+                onClick={(e) => handleLinkClick(e, "#contact")}
+                className="btn-gradient text-center text-sm font-semibold px-5 py-2.5 rounded-full mt-1 cursor-pointer block"
               >
                 Napište mi
-              </button>
+              </a>
             </div>
           </motion.div>
         )}

@@ -49,10 +49,10 @@ export default function ContactSection() {
         setSuccessMessage("Zpráva byla úspěšně odeslána. Brzy se ozvu!");
         formRef.current?.reset();
       } else {
-        setErrorMessage("Něco se pokazilo. Zkuste to prosím znovu.");
+        setErrorMessage(result.error || "Něco se pokazilo. Zkuste to prosím znovu.");
       }
     } catch {
-      setErrorMessage("Něco se pokazilo. Zkuste to prosím znovu.");
+      setErrorMessage("Došlo k chybě při komunikaci se serverem.");
     } finally {
       setIsSubmitting(false);
     }
