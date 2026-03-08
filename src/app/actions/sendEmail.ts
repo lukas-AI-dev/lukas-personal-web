@@ -25,7 +25,7 @@ export async function sendEmail(formData: FormData): Promise<SendEmailResult> {
   // 1. Honeypot check
   if (address) {
     // If completed, pretend it was successful to trick the bot
-    console.log("Honeypot triggered in contact form");
+    console.log("Honeypot aktivován v kontaktním formuláři");
     return { success: true };
   }
 
@@ -80,13 +80,13 @@ export async function sendEmail(formData: FormData): Promise<SendEmailResult> {
     });
 
     if (error) {
-      console.error("Resend API error:", error);
+      console.error("Chyba Resend API:", error);
       return { success: false, error: "Odeslání selhalo kvůli chybě serveru." };
     }
 
     return { success: true };
   } catch (err) {
-    console.error("Unexpected error sending email:", err);
+    console.error("Nečekaná chyba při odesílání emailu:", err);
     return { success: false, error: "Došlo k nečekané chybě. Zkuste to prosím znovu." };
   }
 }

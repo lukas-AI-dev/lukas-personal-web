@@ -87,7 +87,7 @@ export default function ContactSection() {
             >
               {/* Honeypot field - Bots will see this and fill it in, but real users won't */}
               <div style={{ display: "none" }} aria-hidden="true">
-                <label htmlFor="contact-address">Address</label>
+                <label htmlFor="contact-address">Adresa</label>
                 <input
                   id="contact-address"
                   name="address"
