@@ -111,6 +111,8 @@ export default function ContactSection() {
                   required
                   placeholder="Vaše jméno"
                   className="w-full px-4 py-3 rounded-xl border border-[rgba(99,102,241,0.15)] bg-white/70 text-[#1a1a2e] placeholder-[#94a3b8] transition-all focus:border-[#6366f1]"
+                  onInvalid={(e) => (e.target as HTMLInputElement).setCustomValidity("Vyplňte prosím toto pole.")}
+                  onInput={(e) => (e.target as HTMLInputElement).setCustomValidity("")}
                 />
               </div>
               <div>
@@ -127,6 +129,8 @@ export default function ContactSection() {
                   required
                   placeholder="vas@email.cz"
                   className="w-full px-4 py-3 rounded-xl border border-[rgba(99,102,241,0.15)] bg-white/70 text-[#1a1a2e] placeholder-[#94a3b8] transition-all focus:border-[#6366f1]"
+                  onInvalid={(e) => (e.target as HTMLInputElement).setCustomValidity('Zadejte prosím platnou emailovou adresu obsahující znak "@".')}
+                  onInput={(e) => (e.target as HTMLInputElement).setCustomValidity("")}
                 />
               </div>
               <div>
@@ -143,6 +147,8 @@ export default function ContactSection() {
                   required
                   placeholder="Popište váš projekt nebo myšlenku..."
                   className="w-full px-4 py-3 rounded-xl border border-[rgba(99,102,241,0.15)] bg-white/70 text-[#1a1a2e] placeholder-[#94a3b8] transition-all focus:border-[#6366f1] resize-none"
+                  onInvalid={(e) => (e.target as HTMLTextAreaElement).setCustomValidity("Vyplňte prosím toto pole.")}
+                  onInput={(e) => (e.target as HTMLTextAreaElement).setCustomValidity("")}
                 />
               </div>
               <button
