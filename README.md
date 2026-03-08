@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Lukáš Kachtík | Automatizace & Vibe Coding
 
-## Getting Started
+Vítejte v repozitáři mé osobní webové stránky. Tento projekt ztělesňuje mou filozofii **Vibe Codingu** — spojení intuitivního vývoje s precizní technickou automatizací.
 
-First, run the development server:
+## ✨ Klíčové Vlastnosti
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Moderní UI**: Čistá estetika s využitím glassmorphismu a jemných gradientů.
+- **Vibe Animations**: Plynulé interakce a scroll-triggered animace poháněné Framer Motion.
+- **Serverless Kontakt**: Integrovaný kontaktní formulář využívající Next.js Server Actions a Resend API.
+- **Optimalizovaný Výkon**: Postaveno na nejnovějším Next.js 15 pro bleskové načítání a SEO.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Technologie
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Framework**: [Next.js 15+](https://nextjs.org/) (App Router)
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
+- **Animace**: [Framer Motion](https://www.framer.com/motion/)
+- **Ikony**: [Lucide React](https://lucide.dev/)
+- **E-maily**: [Resend](https://resend.com/)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🚀 Lokální Spuštění
 
-## Learn More
+Pro spuštění projektu ve vývojovém režimu:
 
-To learn more about Next.js, take a look at the following resources:
+1. Nainstalujte závislosti:
+   ```bash
+   npm install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Nastavte proměnné prostředí v souboru `.env.local`:
+   - `RESEND_API_KEY`
+   - `SENDER_EMAIL`
+   - `PERSONAL_EMAIL`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. Spusťťe vývojový server:
+   ```bash
+   npm run dev
+   ```
 
-## Deploy on Vercel
+Otevřete [http://localhost:3000](http://localhost:3000) ve vašem prohlížeči.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+© 2026 — Lukáš Kachtík

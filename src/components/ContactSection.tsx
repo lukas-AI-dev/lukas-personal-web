@@ -1,7 +1,9 @@
 "use client";
 
+import { useState, useRef } from "react";
 import AnimatedSection from "./AnimatedSection";
-import { Mail, Github, Linkedin, Send } from "lucide-react";
+import { Mail, Github, Linkedin, Send, Loader2 } from "lucide-react";
+import { sendEmail } from "@/app/actions/sendEmail";
 
 const SOCIAL_LINKS = [
   {
@@ -28,6 +30,34 @@ const SOCIAL_LINKS = [
  * Contact section with a clean form and social media links.
  */
 export default function ContactSection() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const formRef = useRef<HTMLFormElement>(null);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setSuccessMessage("");
+    setErrorMessage("");
+    setIsSubmitting(true);
+
+    try {
+      const formData = new FormData(e.currentTarget);
+      const result = await sendEmail(formData);
+
+      if (result.success) {
+        setSuccessMessage("Zpráva byla úspěšně odeslána. Brzy se ozvu!");
+        formRef.current?.reset();
+      } else {
+        setErrorMessage("Něco se pokazilo. Zkuste to prosím znovu.");
+      }
+    } catch {
+      setErrorMessage("Něco se pokazilo. Zkuste to prosím znovu.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
   return (
     <section id="contact" className="py-24 md:py-32 section-gradient">
       <div className="max-w-6xl mx-auto px-6">
@@ -51,7 +81,8 @@ export default function ContactSection() {
           {/* Contact Form */}
           <AnimatedSection delay={0.15}>
             <form
-              onSubmit={(e) => e.preventDefault()}
+              ref={formRef}
+              onSubmit={handleSubmit}
               className="glass-card rounded-3xl p-8 space-y-5"
             >
               <div>
@@ -63,7 +94,9 @@ export default function ContactSection() {
                 </label>
                 <input
                   id="contact-name"
+                  name="name"
                   type="text"
+                  required
                   placeholder="Vaše jméno"
                   className="w-full px-4 py-3 rounded-xl border border-[rgba(99,102,241,0.15)] bg-white/70 text-[#1a1a2e] placeholder-[#94a3b8] transition-all focus:border-[#6366f1]"
                 />
@@ -77,7 +110,9 @@ export default function ContactSection() {
                 </label>
                 <input
                   id="contact-email"
+                  name="email"
                   type="email"
+                  required
                   placeholder="vas@email.cz"
                   className="w-full px-4 py-3 rounded-xl border border-[rgba(99,102,241,0.15)] bg-white/70 text-[#1a1a2e] placeholder-[#94a3b8] transition-all focus:border-[#6366f1]"
                 />
@@ -91,18 +126,42 @@ export default function ContactSection() {
                 </label>
                 <textarea
                   id="contact-message"
+                  name="message"
                   rows={5}
+                  required
                   placeholder="Popište váš projekt nebo myšlenku..."
                   className="w-full px-4 py-3 rounded-xl border border-[rgba(99,102,241,0.15)] bg-white/70 text-[#1a1a2e] placeholder-[#94a3b8] transition-all focus:border-[#6366f1] resize-none"
                 />
               </div>
               <button
                 type="submit"
-                className="btn-gradient w-full py-3.5 rounded-full font-semibold flex items-center justify-center gap-2 cursor-pointer"
+                disabled={isSubmitting}
+                className="btn-gradient w-full py-3.5 rounded-full font-semibold flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                <Send className="w-4 h-4" />
-                Odeslat zprávu
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Odesílá se...
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-4 h-4" />
+                    Odeslat zprávu
+                  </>
+                )}
               </button>
+
+              {/* Status messages */}
+              {successMessage && (
+                <p className="text-center text-sm font-medium text-emerald-600 mt-3">
+                  {successMessage}
+                </p>
+              )}
+              {errorMessage && (
+                <p className="text-center text-sm font-medium text-red-500 mt-3">
+                  {errorMessage}
+                </p>
+              )}
             </form>
           </AnimatedSection>
 
